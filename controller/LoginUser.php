@@ -48,6 +48,10 @@ if(count($errors) > 0){
         if(password_verify($password, $encPassword)){
             //* AUTH USER (REDIRECT DASHBOARD)
             $_SESSION['auth'] =$res ;
+             //*echo "<pre>";
+             //*print_r( $res);
+             //*echo "<pre>";
+             //*exit();
             header("Location: ../dashboard/index.php");
 
         } else{
@@ -62,10 +66,4 @@ if(count($errors) > 0){
         $_SESSION['errors'] = $errors;
         header("Location: ../signin.php");
     }
-
-
-
-
-
-
 }

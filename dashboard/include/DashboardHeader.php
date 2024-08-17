@@ -4,6 +4,26 @@ if(!isset($_SESSION['auth'])){
   session_unset();
   header("Location: ../signin.php");
 }
+//* DICE BEAR API URL
+define('DICE_BEAR_URL', "https://api.dicebear.com/9.x/initials/svg?seed=");
+
+//* GET PROFILE IMAGE
+function getProfileImg() {
+  if($_SESSION['auth']['profile_img']){
+    //* RETURN PROFILE IMAGE
+    if(file_exists('../'.$_SESSION['auth']['profile_img'])){
+
+      return '../'.$_SESSION['auth']['profile_img'];
+    } else{
+      
+      return '../placeholders/user-placeholder.png';
+    }
+  } else{
+    return DICE_BEAR_URL.ucwords($_SESSION['auth']['name']) ;
+  }
+}
+
+
 
 ?>
 
@@ -91,6 +111,7 @@ if(!isset($_SESSION['auth'])){
           <!-- Navbar -->
 
           <nav
+          style="z-index: 2 !important;"
             class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
             id="layout-navbar">
             <div class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0 d-xl-none">
@@ -134,7 +155,7 @@ if(!isset($_SESSION['auth'])){
                     href="javascript:void(0);"
                     data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                      <img src="./assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                      <img src="<?= getProfileImg() ?>" alt class="w-px-40 h-auto rounded-circle" />
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
@@ -143,11 +164,11 @@ if(!isset($_SESSION['auth'])){
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar avatar-online">
-                              <img src="./assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                              <img src="<?= getProfileImg() ?>" alt class="w-px-40 h-auto rounded-circle" />
                             </div>
                           </div>
                           <div class="flex-grow-1">
-                            <h6 class="mb-0">John Doe</h6>
+                            <h6 class="mb-0"><?= ucwords($_SESSION['auth']['name']) ?></h6>
                             <small class="text-muted">Admin</small>
                           </div>
                         </div>
@@ -157,7 +178,7 @@ if(!isset($_SESSION['auth'])){
                       <div class="dropdown-divider my-1"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a class="dropdown-item" href="./profile.php">
                         <i class="bx bx-user bx-md me-3"></i><span>My Profile</span>
                       </a>
                     </li>
@@ -177,7 +198,7 @@ if(!isset($_SESSION['auth'])){
                       <div class="dropdown-divider my-1"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="javascript:void(0);">
+                      <a class="dropdown-item" href="../controller/Logout.php">
                         <i class="bx bx-power-off bx-md me-3"></i><span>Log Out</span>
                       </a>
                     </li>
