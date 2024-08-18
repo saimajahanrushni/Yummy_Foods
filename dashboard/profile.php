@@ -64,33 +64,41 @@
 
 include "./include/DashboardFooter.php" ;
 ?>
-
 <script>
 
-    const inputImage = document.querySelector('#avatar')
-    const profileImage = document.querySelector('.profileImage')
+const inputImage = document.querySelector('#avatar')
+const profileImage = document.querySelector('.profileImage')
 
-    function changeProfileImage(event) {
-        
-        profileImage.src = URL.createObjectURL(event.target.files[0])
-        
-    }
+function changeProfileImage(event) {
+    
+    profileImage.src = URL.createObjectURL(event.target.files[0])
+    
+}
 
-    inputImage.addEventListener('change', changeProfileImage)
+inputImage.addEventListener('change', changeProfileImage)
 
 
 
-    // const changeProfileImage = () => {}
-    <?php
-     if (isset($_SESSION['success'])){
-     ?>
-     <script>
-        Toast.fire({
-      icon: "success",
-      title: "Profile updated successfully"
-     });
-     </script>
-   <?php
-     }
-  unset($_SESSION['errors']);
-  unset($_SESSION['success']);
+// const changeProfileImage = () => {}
+</script>
+
+<?php
+
+if(isset($_SESSION['success'])){
+?>
+
+
+<script>
+Toast.fire({
+icon: "success",
+title: "Profile Updated successfully"
+});
+</script>
+
+
+
+<?php
+}
+
+unset($_SESSION['errors']);
+unset($_SESSION['success']);
