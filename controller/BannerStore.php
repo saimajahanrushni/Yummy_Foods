@@ -6,7 +6,7 @@ $detail = $_REQUEST['detail'];
 $ctaTitle = $_REQUEST['ctaTitle'];
 $ctaLink = $_REQUEST['ctaLink'];
 $videoLink = $_REQUEST['videoLink'];
-$bannerImage = $_FILES['bannerImage'];
+$bannerImage = $_FILES['banner_img'];
 
 //  print_r($bannerImage);
 //  exit();
@@ -48,12 +48,18 @@ if(count($errors) > 0){
 
      include "../database/env.php";
 
-    $query = "INSERT INTO banners(title, detail, cta_title, cta_link, video_link, banner_img) 
+    $query =  $id ? "UPDATE banners SET title='$title', detail='$detail',cta_title='$ctaTitle', cta_link='$ctaLink',
+        video_link ='$videoLink',banner_img ='$uploadPath'  WHERE id='$id'"
+    : "INSERT INTO banners(title, detail, cta_title, cta_link, video_link, banner_img) 
     VALUES ('$title','$detail','$ctaTitle','$ctaLink','$videoLink','$uploadPath')";
 
    $res = mysqli_query($conn, $query);
     
    if($res){
+    $query = "SELECT * FROM banners WHERE status = 1";
+    $result = mysqli_query($conn, $query);
+    $banner = mysqli_fetch_assoc($result);
+    $_SESSION["banner"] = $banner;
     $_SESSION['success'] = true;
     header('Location: ../dashboard/Banner.php');
    }
